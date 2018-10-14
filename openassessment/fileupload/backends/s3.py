@@ -1,6 +1,7 @@
 import logging
 
 import boto
+from boto.s3.connection import S3Connection
 
 from django.conf import settings
 
@@ -66,8 +67,10 @@ def _connect_to_s3():
     # environment vars or configuration files instead.
     aws_access_key_id = getattr(settings, 'AWS_ACCESS_KEY_ID', None)
     aws_secret_access_key = getattr(settings, 'AWS_SECRET_ACCESS_KEY', None)
+    host = settings.AWS_S3_CUSTOM_DOMAIN if settings.AWS_S3_CUSTOM_DOMAIN else S3Connection.DefaultHost
 
     return boto.connect_s3(
         aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key
+        aws_secret_access_key=aws_secret_access_key,
+        host=host
     )
