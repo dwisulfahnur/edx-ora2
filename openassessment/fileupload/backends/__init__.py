@@ -1,9 +1,10 @@
-from . import s3
-from . import filesystem
-from . import swift
-from . import django_storage
-
 from django.conf import settings
+
+from . import django_storage
+from . import filesystem
+from . import minio
+from . import s3
+from . import swift
 
 
 def get_backend():
