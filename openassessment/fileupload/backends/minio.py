@@ -20,7 +20,7 @@ class Backend(BaseBackend):
             client.put_object(
                 ACL="public-read",
                 Bucket=bucket_name,
-                Key=key_name,
+                Key=key,
                 ContentType=content_type
             )
 
@@ -36,7 +36,7 @@ class Backend(BaseBackend):
         bucket_name, key_name = self._retrieve_parameters(key)
         try:
             client = _connect_to_s3()
-            if client.get_object(Bucket=bucket_name, Key=key_name):
+            if client.get_object(Bucket=bucket_name, Key=key):
                 return "{}{}{}".format(client.meta.endpoint_url, bucket_name, key_name)
             else:
                 return None
@@ -51,7 +51,7 @@ class Backend(BaseBackend):
 
         client = _connect_to_s3()
         try:
-            client.delete_object(Bucket=bucket_name, Key=key_name)
+            client.delete_object(Bucket=bucket_name, Key=key)
         except:
             return False
 
