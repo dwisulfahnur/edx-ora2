@@ -20,11 +20,11 @@ class Backend(BaseBackend):
             client.put_object(
                 ACL="public-read",
                 Bucket=bucket_name,
-                Key=key,
+                Key=key_name,
                 ContentType=content_type
             )
 
-            upload_url = "{}{}{}".format(client.meta.endpoint_url, bucket_name, key_name)
+            upload_url = "{}/{}/{}".format(client.meta.endpoint_url, bucket_name, key_name)
             return upload_url
         except Exception as ex:
             logger.exception(
@@ -37,7 +37,7 @@ class Backend(BaseBackend):
         try:
             client = _connect_to_s3()
             if client.get_object(Bucket=bucket_name, Key=key_name):
-                return "{}{}{}".format(client.meta.endpoint_url, bucket_name, key_name)
+                return "{}/{}/{}".format(client.meta.endpoint_url, bucket_name, key_name)
             else:
                 return None
         except Exception as ex:
