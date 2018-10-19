@@ -50,9 +50,9 @@ class Backend(BaseBackend):
         bucket_name, key_name = self._retrieve_parameters(key)
 
         client = _connect_to_s3()
-        if client.get_object(Bucket=bucket_name, Key=key_name):
+        try:
             client.delete_object(Bucket=bucket_name, Key=key_name)
-        else:
+        except:
             return False
 
 
